@@ -1,4 +1,3 @@
-
 class Person:
 
     def __init__(self, surname: str, name: str, age: int, sex: str, height: float, weight: float,
@@ -27,8 +26,7 @@ class Students(Person):
         self.english_level = english_level
 
     def __str__(self):
-        return f'{self.surname} {self.name}, {self.age} y.o.\n{self.email}\n{self.phone}' \
-               f'\nEnglish level: {self.english_level}'
+        return f'{self.surname} {self.name}, {self.age} y.o., {self.email}, {self.phone}, {self.english_level}'
 
 
 class Group:
@@ -38,8 +36,12 @@ class Group:
         self.max_student = max_students
 
     def add_student(self, student):
-        if student not in self.students and len(self.students) < self.max_student:
-            self.students.append(student)
+
+        if len(self.students) >= self.max_student:
+            raise ValueError('The number of students in the group is exceeded')
+
+        self.students.append(student)
+
 
     def remove_student(self, student):
         if student in  self.students:
@@ -53,14 +55,46 @@ class Group:
 
         return list
     def __str__(self):
-        return f'{self.title}\n' + '\n'.join(map(str, self.students))
+        return f'{self.title}\n\n' + '\n'.join(map(str, self.students))
 
 
 group_python = Group("Group Python")
 
-group_python.add_student(Students('Ivanov', 'Ivan', 19, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+group_python.add_student(Students('Ivanov', 'Ivan', 21, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
                                   '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 22, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 23, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 24, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 25, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 26, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 27, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 28, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+group_python.add_student(Students('Ivanov', 'Ivan', 29, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+                                  '+380447777777', 'B1'))
+# group_python.add_student(Students('Ivanov', 'Ivan', 30, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+#                                   '+380447777777', 'B1'))
+# group_python.add_student(Students('Ivanov', 'Ivan', 31, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+#                                   '+380447777777', 'B1'))
+# group_python.add_student(Students('Ivanov', 'Ivan', 32, 'male', 173.2, 69.3, 23652514, 'none', 'ii@gmail.com',
+#                                   '+380447777777', 'B1'))
 
+print(group_python)
 
+import logging
 
+logger = logging.getLogger('Students.py')
+logger.setLevel(logging.ERROR)
+fh = logging.FileHandler('logger.log')
+fh.setLevel(logging.ERROR)
+formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
+logger.error('attempt to add an extra student to the group')
